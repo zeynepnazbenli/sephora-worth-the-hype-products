@@ -71,10 +71,10 @@ with left:
     st.markdown("### 🧾 Product card")
 
     card_cols = [
-        "product_name", "brand_name",
-        "primary_category", "secondary_category", "tertiary_category",
-        "price_usd", "sale_price_usd",
-        "sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"
+        "Product Name", "Brand Name",
+        "Primary Category", "Secondary Category", "Tertiary Category",
+        "Price USD", "Sale Price USD",
+        "Sephora Exclusive", "Limited Edition", "New", "Online Only", "Out Of Stock"
     ]
     card_cols = [c for c in card_cols if c in row.index]
 
