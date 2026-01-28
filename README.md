@@ -1,6 +1,9 @@
 # Sephora: Worth the Hype? 💄🧴  
 ### Machine Learning Classification & Streamlit Web App
 
+## Live Demo
+👉 https://sephora-worth-the-hype-appucts-gv8cbfw4avvtce6vfx5dyk.streamlit.app
+
 This project is an end-to-end machine learning application that predicts whether a Sephora product is **worth the hype**, **underrated**, or **overrated** based on product features such as ratings, reviews, popularity, and pricing.
 
 An interactive **Streamlit web application** is provided to explore products and get real-time predictions from a trained ML model.
