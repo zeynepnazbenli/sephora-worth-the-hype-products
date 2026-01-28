@@ -71,28 +71,35 @@ with left:
     st.markdown("### 🧾 Product card")
 
     card_cols = [
-        "Product Name", "Brand Name",
-        "Primary Category", "Secondary Category", "Tertiary Category",
-        "Price USD", "Sale Price USD",
-        "Sephora Exclusive", "Limited Edition", "New", "Online Only", "Out Of Stock"
+        "product_name", "brand_name",
+        "primary_category", "secondary_category", "tertiary_category",
+        "price_usd", "sale_price_usd",
+        "sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"
     ]
     card_cols = [c for c in card_cols if c in row.index]
 
-   
-    show = []
-    for c in card_cols:
-        val = row[c]
-        if pd.isna(val):
-            continue
-        
-        if isinstance(val, (bool,)) or c in ["sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"]:
-            val = "Yes" if str(val).lower() in ["1", "true", "yes"] else "No"
-        show.append((c, val))
+    # 1) Kolonları al
+    s = row[card_cols].copy()
 
-    card_df = pd.DataFrame(show, columns=["field", "value"])
-    card_df["value"] = card_df["value"].astype(str)
+    # 2) NaN olanları at
+    s = s.dropna()
 
-    st.dataframe(card_df, use_container_width=True, hide_index=True)
+    # 3) Bool/flag formatla
+    flag_cols = {"sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"}
+    for c in list(s.index):
+        if c in flag_cols:
+            v = s[c]
+            s[c] = "Yes" if str(v).strip().lower() in ["1", "1.0", "true", "yes"] else "No"
+
+    # 4) field/value tablosu
+    card_df = s.to_frame(name="value").reset_index()
+    card_df.columns = ["field", "value"]
+
+    # 5) UI için field adlarını güzelleştir
+    card_df["field"] = card_df["field"].str.replace("_", " ").str.title()
+    card_df["field"] = card_df["field"].str.replace("Usd", "USD", regex=False)
+
+    st.table(card_df)
 with right:
     st.markdown("### Prediction")
 
