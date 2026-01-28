@@ -78,13 +78,13 @@ with left:
     ]
     card_cols = [c for c in card_cols if c in row.index]
 
-    # Show as nice key-value list
+   
     show = []
     for c in card_cols:
         val = row[c]
         if pd.isna(val):
             continue
-        # prettier booleans
+        
         if isinstance(val, (bool,)) or c in ["sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"]:
             val = "Yes" if str(val).lower() in ["1", "true", "yes"] else "No"
         show.append((c, val))
@@ -102,7 +102,7 @@ with right:
 
     style = LABEL_STYLES.get(pred, {"bg": "#F2F2F2", "fg": "#333", "border": "#DDD"})
 
-    # extra info (safe)
+    
     price = row["price_usd"] if "price_usd" in row.index else None
     cat = row["primary_category"] if "primary_category" in row.index else None
 
