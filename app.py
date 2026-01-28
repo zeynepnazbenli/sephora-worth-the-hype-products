@@ -41,7 +41,7 @@ model = load_model()
 
 st.sidebar.header("Filters")
 
-# Filters
+
 brands = ["All"] + sorted(df["brand_name"].dropna().unique().tolist())
 cats = ["All"] + sorted(df["primary_category"].dropna().unique().tolist())
 
@@ -78,24 +78,23 @@ with left:
     ]
     card_cols = [c for c in card_cols if c in row.index]
 
-    # 1) Kolonları al
+ 
     s = row[card_cols].copy()
 
-    # 2) NaN olanları at
+ 
     s = s.dropna()
 
-    # 3) Bool/flag formatla
+   
     flag_cols = {"sephora_exclusive", "limited_edition", "new", "online_only", "out_of_stock"}
     for c in list(s.index):
         if c in flag_cols:
             v = s[c]
             s[c] = "Yes" if str(v).strip().lower() in ["1", "1.0", "true", "yes"] else "No"
 
-    # 4) field/value tablosu
+ 
     card_df = s.to_frame(name="value").reset_index()
     card_df.columns = ["field", "value"]
 
-    # 5) UI için field adlarını güzelleştir
     card_df["field"] = card_df["field"].str.replace("_", " ").str.title()
     card_df["field"] = card_df["field"].str.replace("Usd", "USD", regex=False)
 
